@@ -114,6 +114,10 @@ st.markdown("""
         background-color: #1D4ED8;
         box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
     }
+    /* Fix text color for Download Buttons */
+    div.stDownloadButton > button {
+        color: #FFFFFF !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
