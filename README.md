@@ -36,17 +36,30 @@ Use the credentials below to test the platform across different roles, or regist
 
 ```text
 student-productivity-xai/
-├── app.py                  # Main multi-tab Streamlit web application
-├── database.py             # SQLite database engine (auth, users, assessment logs)
-├── pdf_generator.py        # FPDF diagnostic PDF generation engine
-├── train.py                # ML pipeline training and artifact exporter
-├── requirements.txt        # Project dependencies for cloud runtime
-├── data/
-│   └── student-mat.csv     # UCI Student Performance raw dataset
-└── models/
-    ├── student_productivity_model.pkl  # Trained Random Forest model
-    ├── model_columns.pkl              # Feature column alignments
-    └── shap_explainer.pkl             # Serialized SHAP explainer
+├── app.py                      # Main Streamlit web application
+├── auth.py                     # Authentication & user management
+├── database.py                 # SQLite database engine
+├── styles.py                   # Centralized CSS styles
+├── train.py                    # ML pipeline training script
+├── pdf_generator.py            # PDF diagnostic report generator
+├── requirements.txt            # Python dependencies
+├── packages.txt                # Linux system dependencies
+├── README.md                   # Project documentation
+├── edusphere.db                # SQLite database
+├── users.db                    # User credentials database
+├── .gitignore                  # Git ignore file
+├── dashboards/                 # Role-based dashboard modules
+│   ├── __init__.py
+│   ├── admin_dashboard.py      # Admin portal
+│   ├── counselor_dashboard.py  # Counselor portal
+│   └── student_dashboard.py    # Student portal
+├── data/                       # Dataset directory
+│   ├── student-mat.csv         # Math student data
+│   └── student-por.csv         # Portuguese student data
+└── models/                     # Trained model artifacts
+    ├── student_productivity_model.pkl    # Random Forest model
+    ├── model_columns.pkl                 # Feature columns
+    └── shap_explainer.pkl                # SHAP explainer
 
     Setup & Execution Guide
 Option A: Local / GitHub Codespaces
