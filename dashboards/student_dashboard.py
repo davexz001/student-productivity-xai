@@ -19,7 +19,6 @@ def render_student_dashboard(model, columns, explainer):
     </div>
     """, unsafe_allow_html=True)
 
-    # ===== SLIDERS WITHOUT KEYS (Let Streamlit handle them) =====
     col1, col2, col3 = st.columns(3)
     with col1:
         studytime = st.slider("Study Time (1-4)", 1, 4, 2)
@@ -102,27 +101,30 @@ def render_student_dashboard(model, columns, explainer):
         plt.close("all")
 
         # ===== PDF DOWNLOAD BUTTON =====
-                # ===== PDF DOWNLOAD (Single Button) =====
         st.markdown("---")
         st.subheader("📄 Download Report")
         
-        from pdf_generator import generate_student_pdf
-        pdf_bytes = generate_student_pdf(
-            username=st.session_state.username,
-            g1=g1,
-            g2=g2,
-            predicted=prediction_clipped,
-            risk=risk,
-            studytime=studytime,
-            absences=absences,
-            failures=failures,
-            goout=goout,
-            health=health
-        )
-        st.download_button(
-            label="📥 Download My Report (PDF)",
-            data=pdf_bytes,
-            file_name=f"{st.session_state.username}_report.pdf",
-            mime="application/pdf",
-            type="secondary"
-        )
+        try:
+            from pdf_generator import generate_student_pdf
+            pdf_bytes = generate_student_pdf(
+                username=st.session_state.username,
+                g1=g1,
+                g2=g2,
+                predicted=prediction_clipped,
+                risk=risk,
+                studytime=studytime,
+                absences=absences,
+                failures=failures,
+                goout=goout,
+                health=health
+            )
+            st.download_button(
+                label="📥 Download My Report (PDF)",
+                data=pdf_bytes,
+                file_name=f"{st.session_state.username}_report.pdf",
+                mime="application/pdf",
+                type="secondary",
+                use_container_width=True
+            )
+        except Exception as e:
+            st.error(f"PDF generation error: {e}")
