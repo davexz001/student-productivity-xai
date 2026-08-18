@@ -127,6 +127,14 @@ def render_counselor_dashboard(model, columns, explainer):
             prediction = model.predict(input_df)[0]
             prediction_clipped = np.clip(prediction, 1.0, 20.0)
 
+            # Determine risk level
+            if prediction_clipped >= 14:
+                risk = "Low Risk"
+            elif prediction_clipped >= 10:
+                risk = "Moderate Risk"
+            else:
+                risk = "High Risk"
+
             st.markdown("---")
             st.subheader("📈 Diagnostic Result")
             
@@ -182,6 +190,39 @@ def render_counselor_dashboard(model, columns, explainer):
 """
             st.code(notes, language="text")
 
+            # ===== PDF DOWNLOAD BUTTON (Counselor) =====
+            # ===== PDF DOWNLOAD (Single Button) =====
+            st.markdown("---")
+            st.subheader("📄 Download Report")
+            
+            from pdf_generator import generate_counselor_pdf
+            
+            action_plan = f"""- Increase study hours to Level {min(4, studytime+1)}
+- Monitor attendance
+- {'Follow-up in 2 weeks' if prediction_clipped < 10 else 'Check-in next month'}"""
+            
+            pdf_bytes = generate_counselor_pdf(
+                username=f"Student ID: {selected_idx if 'selected_idx' in locals() else 'N/A'}",
+                g1=g1,
+                g2=g2,
+                predicted=prediction_clipped,
+                risk=risk,
+                studytime=studytime,
+                absences=absences,
+                failures=failures,
+                goout=goout,
+                health=health,
+                risk_factors=risk_text,
+                action_plan=action_plan
+            )
+            st.download_button(
+                label="📥 Download Student Report (PDF)",
+                data=pdf_bytes,
+                file_name=f"student_{selected_idx if 'selected_idx' in locals() else 'N/A'}_report.pdf",
+                mime="application/pdf",
+                type="secondary"
+            )
+            
     with tab2:
         st.markdown("""
         <div class="card">

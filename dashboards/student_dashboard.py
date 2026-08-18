@@ -63,6 +63,14 @@ def render_student_dashboard(model, columns, explainer):
         prediction = model.predict(input_df)[0]
         prediction_clipped = np.clip(prediction, 1.0, 20.0)
 
+        # Determine risk level
+        if prediction_clipped >= 14:
+            risk = "Low Risk"
+        elif prediction_clipped >= 10:
+            risk = "Moderate Risk"
+        else:
+            risk = "High Risk"
+
         st.markdown("""
         <div class="card">
             <div class="card-header">📈 Performance Projection</div>
@@ -92,3 +100,29 @@ def render_student_dashboard(model, columns, explainer):
         plt.tight_layout()
         st.pyplot(fig, use_container_width=False)
         plt.close("all")
+
+        # ===== PDF DOWNLOAD BUTTON =====
+                # ===== PDF DOWNLOAD (Single Button) =====
+        st.markdown("---")
+        st.subheader("📄 Download Report")
+        
+        from pdf_generator import generate_student_pdf
+        pdf_bytes = generate_student_pdf(
+            username=st.session_state.username,
+            g1=g1,
+            g2=g2,
+            predicted=prediction_clipped,
+            risk=risk,
+            studytime=studytime,
+            absences=absences,
+            failures=failures,
+            goout=goout,
+            health=health
+        )
+        st.download_button(
+            label="📥 Download My Report (PDF)",
+            data=pdf_bytes,
+            file_name=f"{st.session_state.username}_report.pdf",
+            mime="application/pdf",
+            type="secondary"
+        )
