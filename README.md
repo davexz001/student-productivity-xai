@@ -14,9 +14,9 @@ Use the credentials below to test the platform across different roles, or regist
 
 | Role | Username | Password | Access & Key Features |
 | :--- | :--- | :--- | :--- |
-| **Student** | `student1` | `password123` | Self-service diagnostic portal, performance projections, actionable guidance, PDF diagnostic download. |
-| **Counselor** | `counselor1` | `counselor123` | Risk triage, SHAP root-cause feature vectors, what-if intervention simulator. |
-| **Admin** | `admin1` | `admin123` | System-wide administrative controls and user management oversight. |
+| **Student** | `student1` | `student123` | Self-service diagnostic portal, performance projections, actionable guidance, PDF diagnostic download. |
+| **Counselor** | `counselor` | `counselor123` | Risk triage, SHAP root-cause feature vectors, what-if intervention simulator. |
+| **Admin** | `admin` | `admin123` | System-wide administrative controls and user management oversight. |
 
 ---
 
