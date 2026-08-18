@@ -8,7 +8,7 @@ from auth import verify_credentials, register_student, get_all_users
 from dashboards.student_dashboard import render_student_dashboard
 from dashboards.counselor_dashboard import render_counselor_dashboard
 from dashboards.admin_dashboard import render_admin_dashboard
-from styles import SLIDER_CSS  # ← ADD THIS
+from styles import SLIDER_CSS
 
 st.set_page_config(
     page_title="EduVantage XAI Portal",
@@ -227,17 +227,16 @@ st.markdown("""
     .stPlotlyChart {
         max-width: 100% !important;
     }
-    /* Matplotlib figure container */
     .stImage img {
         max-width: 800px !important;
         width: 100% !important;
         height: auto !important;
     }
-
-    st.markdown(SLIDER_CSS, unsafe_allow_html=True)
 </style>
 """, unsafe_allow_html=True)
 
+# ===== SLIDER CSS (MOVED OUTSIDE THE STYLE BLOCK) =====
+st.markdown(SLIDER_CSS, unsafe_allow_html=True)
 
 
 # ==========================================
@@ -356,7 +355,6 @@ def login_screen():
     
     col1, col2, col3 = st.columns([1, 1.5, 1])
     with col2:
-        # Removed the white container box — now transparent
         tab1, tab2 = st.tabs(["Login", "Register"])
         
         with tab1:
@@ -392,6 +390,7 @@ def login_screen():
                     else:
                         st.error(msg)
     st.stop()
+
 
 # ==========================================
 # LOAD ARTIFACTS
