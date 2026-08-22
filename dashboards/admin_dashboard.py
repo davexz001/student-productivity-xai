@@ -66,7 +66,7 @@ def render_admin_dashboard(model, columns):
                         except:
                             pass
                 
-                st.write(f"✅ Loaded {len(batch_data)} records")
+                st.write(f" Loaded {len(batch_data)} records")
                 
                 if st.button("Run Batch Predictions", type="primary"):
                     for col in columns:
